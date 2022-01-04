@@ -1,5 +1,7 @@
 package hello.core.member;
 
+// 한 열거형의 '타입' 이란 것은, 그 열거형 안의 값(내용)에 해당되는 것이면 된다는 것이다.
+
 public class Member {
 
     private Long id;
