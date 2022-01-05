@@ -1,6 +1,9 @@
 package hello.core;
 
+import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
+import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
@@ -23,15 +26,24 @@ import hello.core.order.OrderServiceImpl;
  * - MemberServiceImpl -> MemoryMemberRepository
  * - OrderServiceImpl -> 'MemoryMemberRepository', 'FixDisCountPolicy'
  * */
-public class AppConfig {
+    public class AppConfig {
 
-    public MemberService memberService() {
-        return new MemberServiceImpl(new MemoryMemberRepository());     // MemberServiceImpl 인스턴스를 생성할 때, MemberServiceImpl의 생성을 위해 필요한 객체를 MemberServiceImpl의 생성자를 통해서 넣어서 이용하고 있다
-                                                                        // 이것처럼 '생성자를 통해 필요한 객체를 넣어주고 있는 것' 을 : 생성자 주입(생성자 인젝션: constructor injection) 이라고 함
+        public MemberService memberService() {
+            return new MemberServiceImpl(memberRepository());     // MemberServiceImpl 인스턴스를 생성할 때, MemberServiceImpl의 생성을 위해 필요한 객체를 MemberServiceImpl의 생성자를 통해서 넣어서 이용하고 있다
+                                                                  // 이것처럼 '생성자를 통해 필요한 객체를 넣어주고 있는 것' 을 : 생성자 주입(생성자 인젝션: constructor injection) 이라고 함
+        }
+
+        public OrderService orderService() {
+            return new OrderServiceImpl(memberRepository(), discountPolicy());
+        }
+
+        private MemberRepository memberRepository() {
+            return new MemoryMemberRepository();
+        }
+
+        public DiscountPolicy discountPolicy() {
+//            return new FixDiscountPolicy();
+            return new RateDiscountPolicy();
+        }
+
     }
-
-    public OrderService orderService() {
-        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
-    }
-
-}
