@@ -3,12 +3,16 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderServiceImpl implements OrderService {
     // 어떤 참조타입 객체 필드에 final 이 적용되어있으면, 무조건 'new 타입명()' 식으로 기본생성해서 할당하는 방식이든, 생성자로 할당하는 방식이든 해야 함
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+    @Autowired // 의존관계 설정해주기를 위해 @Autowired로 자동주입 을 설정해줌
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
