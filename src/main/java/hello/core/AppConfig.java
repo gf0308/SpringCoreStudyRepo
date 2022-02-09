@@ -30,8 +30,15 @@ import org.springframework.context.annotation.Configuration;
  * - MemberServiceImpl -> MemoryMemberRepository
  * - OrderServiceImpl -> 'MemoryMemberRepository', 'FixDisCountPolicy'
  * */
-@Configuration  // '설정정보'를 담당하는 부분(객체) 라는 것(애플리케이션의 구성정보를 담당하는곳)
+@Configuration  // '설정정보'를 담당하는 부분(객체) 라는 것(애플리케이션의 구성정보를 담당하는곳) ; @Configuration 이 없어도 @Bean이 붙어있는 것들은 객체로서 컨테이너에의해 생성이 됨, 다만 (의존성주입을 사용하지않고)directly 하게 생성되며 "@Configuration 처리한 클래스를 스프링이 상속해서 CGLIB클래스로 만들어서 이용해주는 것"이 없어지기 때문에,
 public class AppConfig {
+
+    //call AppConfig.memberService
+    //call AppConfig.memberRepository
+    //call AppConfig.orderService
+    //call AppConfig.memberRepository
+    //call AppConfig.memberRepository
+
     @Bean   // 스프링컨테이너가 생성해서, 컨테이너가 담아 보유하고, 관리해줄 (자바)객체 Bean 이라는 것 -> 이렇게 스프링컨테이너에 등록된 객체를 '스프링 빈' 이라고 함
     public MemberService memberService() {
         System.out.println("call AppConfig.memberService");
